@@ -7,7 +7,15 @@ Rails.application.routes.draw do
     sessions: 'users/sessions',
     registrations: 'users/registrations'
   }
-  resources :reservations
-  resources :cars
+  resources :reservations do
+    member do
+      patch :cancel
+    end
+  end
+  resources :cars do
+    member do
+      get :availability
+    end
+  end
   get '/current_user', to: 'current_user#index'
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_01_172844) do
+ActiveRecord::Schema[7.0].define(version: 2026_04_13_000002) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -22,6 +22,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_01_172844) do
     t.datetime "updated_at", null: false
     t.string "featured_image"
     t.string "specifications"
+    t.decimal "price_per_day", precision: 10, scale: 2
+    t.string "category"
   end
 
   create_table "reservations", force: :cascade do |t|
@@ -31,8 +33,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_01_172844) do
     t.bigint "car_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.date "start_date", null: false
+    t.date "end_date", null: false
+    t.string "status", default: "active", null: false
+    t.datetime "cancelled_at"
     t.index ["car_id"], name: "index_reservations_on_car_id"
-    t.index ["user_id", "car_id"], name: "index_reservations_on_user_id_and_car_id", unique: true
+    t.index ["status"], name: "index_reservations_on_status"
     t.index ["user_id"], name: "index_reservations_on_user_id"
   end
 
